@@ -1,5 +1,8 @@
-# Base image: Use Node.js alpine
+# Base image: Use a minimal Node.js image
 FROM node:16-alpine
+
+# Install git and other required dependencies
+RUN apk add --no-cache git
 
 # Set working directory
 WORKDIR /usr/src/app
@@ -7,8 +10,8 @@ WORKDIR /usr/src/app
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
-# Install all dependencies (production + development)
-RUN npm ci
+# Install production dependencies
+RUN npm ci --only=production
 
 # Copy application code
 COPY . .
@@ -16,5 +19,5 @@ COPY . .
 # Expose the application port
 EXPOSE 3001
 
-# Start the application in development mode
-CMD ["npm", "run", "start:dev"]
+# Start the application
+CMD ["npm", "start"]
