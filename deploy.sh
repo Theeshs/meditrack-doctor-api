@@ -2,7 +2,7 @@ echo "enabled minicube docker env"
 eval $(minikube docker-env)
 
 echo "building new docker image"
-docker build -t patient-service-api .
+docker build -t doctor-service-api .
 
 echo "appliyng deployment yml"
 kubectl apply -f deployment.yaml
